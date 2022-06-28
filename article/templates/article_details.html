@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block titulo %} {{ article.title}} {% endblock %}
+
+
+{% block contenido %} 
+
+<h1>{{ article.title }}</h1>
+<h3> Por {{ article.article_author }}</h3>
+
+<p>{{ article.article_content }}</p>
+
+<p><a class="btn2 btn-primary" href="{% url 'articles' %}">Regresar a la lista de artículos</a></p>
+{% endblock %}

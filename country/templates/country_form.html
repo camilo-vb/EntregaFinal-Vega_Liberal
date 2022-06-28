@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block titulo %} Agregar país {% endblock %}
+
+
+{% block contenido %} 
+
+<h2>Formulario para agregar nuevo país</h2>
+
+<div class="card">
+    <div class="card-header">
+        Agregar país
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Datos del país</h4>
+        <form enctype="multipart/form-data" method="post">{% csrf_token %}
+    
+            <table>
+                {{ country_form.as_table| safe }}
+                {{ country_form.media }}
+            </table>
+
+            <div>
+                <input type="submit" class="btn btn-primary" value="Guardar país" />
+            </div>
+        </form>
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block titulo %} Lista de artículos {% endblock %}
+
+
+{% block contenido %} 
+
+<h1>Bienvenidos a la sección de artículos.</h1>
+
+<h2>Lista de artículos:</h2>
+
+    {% for article in articles %}
+<li>Título del artículo: {{ article.title }}</li>
+<li>País sobre el artículo: {{ article.country }}</li>
+<li>Descripción: {{ article.article_description| safe }}</li>
+<li>Autor: {{ article.article_author }}</li>
+<li>Fecha de publicación: {{ article.article_date }}</li>
+<a href="{% url 'article-detail' article.pk %}">Leer más...</a>
+{% if user.is_authenticated %}
+(
+<a href="{% url 'article_update' article.id %}">Editar</a>
+|
+<a href="{% url 'article-delete' article.id %}">Borrar</a>
+)
+{% endif %}
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+<div>
+    <a name="" id="" class="btn btn-succees" href="{% url 'article_form' %}" role="button">Crear nuevo artículo</a>
+</div>
+{% endif %}
+
+{% endblock %}
