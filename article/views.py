@@ -1,12 +1,14 @@
+from xml.etree.ElementTree import Comment
 from django.shortcuts import render
-from article.models import Article
-from article.forms import ArticleForm
+from django.urls import reverse_lazy
+from article.models import Article, Comment
+from article.forms import ArticleForm, CommentForm
 from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
 import random
 import string
-from django.views.generic import DetailView
+from django.views.generic import DetailView, CreateView
 
 # Create your views here.
 def article_list(request):
@@ -133,3 +135,38 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = 'article_details.html'
 
+class AddCommentView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'add_comment.html'
+    #fields = '__all__'
+    def form_valid(self, form):
+        form.instance.article_id = self.kwargs['pk']
+        return super().form_valid(form)
+    success_url = reverse_lazy('articles')
+
+
+@login_required
+def delete_comment(request, pk: int):
+    comment = Comment.objects.get(pk=pk)
+    if request.method == 'POST':
+        comment.delete()
+
+        comments = Comment.objects.all()
+        context_dict = {
+            'comments': comments
+        }
+        return render(
+            request=request,
+            context=context_dict,
+            template_name="article_list.html"
+        )
+
+    context_dict = {
+        'comment': comment,
+    }
+    return render(
+        request=request,
+        context=context_dict,
+        template_name='comment_confirm_delete.html'
+    )

@@ -10,9 +10,9 @@
 <h2>Lista de países:</h2>
 
 {% for country in countries %}
-<li>Nombre del país: {{ country.name }}</li>
+<br/>
+<h5>Nombre del país: {{ country.name }}</h5>
 <li>Continente: {{ country.continent }}</li>
-
 
 {% if user.is_authenticated %}
 (
@@ -21,6 +21,7 @@
 <a href="{% url 'country-delete' country.id %}">Borrar</a>
 )
 {% endif %}
+<br/>
     {% endfor %}
 
     {% if user.is_authenticated %}
