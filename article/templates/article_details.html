@@ -8,7 +8,7 @@
 <h1>{{ article.title }}</h1>
 <h3> Por {{ article.article_author }}</h3>
 
-<p>{{ article.article_content }}</p>
+<p>{{ article.article_content | safe }}</p>
 
 <div>
     <h2>Comentarios:</h2>
@@ -30,12 +30,13 @@
     <a href="{% url 'comment-delete' comment.pk %}">Borrar</a>
     <br/>
     <br/>
+    <a href="{% url 'add_comment' article.pk %}">Añadir otro comentario</a>
     {% endfor %}
     
     <br/>
 {% endif %}
 <br/><br/>
-<a href="{% url 'add_comment' article.pk %}">Añadir otro comentario</a>
+
 </div>
 <br/>
 <p><a class="btn2 btn-primary" href="{% url 'articles' %}">Regresar a la lista de artículos</a></p>
